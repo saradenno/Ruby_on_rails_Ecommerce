@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> <%= yield (:title) || content_for(:title) || "Ecommerce Rails" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <meta name="stripe-pk" content="<%= Rails.application.credentials.dig(:stripe, :pk) %>">
+    <script src="https://js.stripe.com/v3/"></script>
+
+  </head>
+
+  <body class="bg-gradient-to-r from-gray-100 via-gray-300 to-gray-500 min-h-screen flex items-center justify-center text-gray-900">
+    <%= render "layouts/navbar" %>
+    <!-- Subtiele, neutrale gradient van lichtgrijs naar donkergrijs -->
+    <main class="container mx-auto px-5 flex flex-col items-center justify-center bg-white bg-opacity-80 p-8 rounded-lg shadow-lg backdrop-blur-md">
+      <!-- Main container zonder de 'mt-28' zodat de container minder witruimte bovenaan heeft -->
+      <%= yield %>
+    </main>
+  </body>
+</html>

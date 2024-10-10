@@ -1,0 +1,60 @@
+
+<div class="w-full">
+  
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+ 
+  <div class ="max-w-7xl w-full mx-auto px-10 mb-2">
+    <%= link_to "Products", products_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium mb-2 hover:text-gray-200" %>
+    <%= link_to " > #{@product.category.name}", @product.category, class: "text-xl text-gray-100" if @product.category %>
+    <%= link_to " > #{@product.name}", @product, class: "text-xl text-gray-100" %>
+    
+
+  </div>
+
+  <!-- Create a two-column grid: left for the image, right for the text -->
+  <div class="grid md:grid-cols-2 ">
+    
+    <div class="max-w-md w-full mx-auto">
+      <% if @product.images.any? %>
+        
+        <%= image_tag @product.images.first, class: "w-full h-80 object-cover" %>
+        
+        
+        <div class="grid grid-cols-3 gap-4 mt-4">
+          <% @product.images[1..].each do |image| %>
+            <%= image_tag image, class: "w-full h-20 object-cover" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>  
+
+    
+    <div class=" max-w-xl flex flex-col gap-4 ">
+      <h1 class="font-miroles text-5xl text-black-100 mb-4"><%= @product.name %></h1>
+      <div class="max-w-sm">
+        <%= @product.description %>
+      </div>
+      <span class=" inline-block bg-blue-500 p-2 mt-4 rounded-lg text-green-50 mr-auto " >
+      <%= number_to_currency(@product.price, unit: "€") %></span>
+      <div class="flex justify-between gap-8">
+        <%= link_to "Buy Now" ,product_buy_now_path(@product), class: "rounded-lg font-semibold p-4 text-center text-xl bg-green-600 hover:bg-green-700 mr-auto w-full"%>
+        <%= render "add_to_cart" , product: @product %>
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+
+  
+  <% if current_admin %>
+    <%= link_to "Edit this product", edit_product_path(@product), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Back to products", products_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <div class="inline-block ml-2">
+      <%= button_to "Destroy this product", @product, method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    </div>
+  <% end %>
+  
+</div>
