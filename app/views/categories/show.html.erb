@@ -1,0 +1,33 @@
+<div class="mx-auto w-full flex-col">  
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <% end %>
+
+    
+    
+    <div class="relative flex items-center justify-center">
+      <%= image_tag(@category.image, class: "h-80 w-3/4 mx-auto object-cobver rounded-lg brightness-75") if @category.image.attached? %>
+      <h1 class=" text-6xl  text-center font-mirole text-gray-200 absolute "><%= @category.name %> </h1>
+    </div>
+    <div class="text-xl font-semibold text-gray-500 flex justify-center mt-4">
+    <%=@category.description %>
+    </div>
+
+    <div id="products" class="min-w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <% @category.products.each do |product| %>
+      <%= render "products/product", product: product %>
+    
+    <% end %>
+    </div>
+
+    <% if current_admin %>
+      <div class="w-full flex justify-center items-center mt-16 gap-4">
+        <%= link_to "Edit this category", edit_category_path(@category), class: " rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        <%= link_to "Back to categories", categories_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+        <div class="inline-block ml-2">
+          <%= button_to "Destroy this category", @category, method: :delete, class: " rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+        </div>
+      </div>
+    <% end %>
+  
+</div>
