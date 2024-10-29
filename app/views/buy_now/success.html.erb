@@ -1,0 +1,14 @@
+
+    <div class="w-full flex flex-col items-center md:pt-8">
+  <div class="h-[40vh] w-full mb-8 flex flex-col items-center justify-center gap-4 bg-repeat-round" style="background-image: url('<%= asset_path('giphy (1).gif') %>')">
+    <h2 class="font-miroles font-semibold text-5xl text-indigo-50 mb-4 text-center"> Thank you for purchasing! </h2>
+    <p class="text-xl font-semibold text-black-300"> your product will be shipped shortly </p> 
+  </div>
+  <h1 class="font-miroles text-5xl text-black-100 mb-4 text-center"> <%= @product.name %> </h1>
+  <div class="max-w-2xl w-full"> 
+    <%= image_tag(@product.images.first, class: "w-full h-96 object-cover rounded-lg") if @product.images.any? %>
+    <div class="text-gray-500 text-lg mt-4"> 
+      <%= @product.description %>
+    </div>
+  </div>
+</div>
