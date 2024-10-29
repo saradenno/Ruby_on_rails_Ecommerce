@@ -28,5 +28,19 @@ class CartsController < ApplicationController
     end
 
 
- 
+    def show
+    end 
+
+
+    def checkout
+        if !@current_cart&.cart_items&.any?
+            redirect_to root_path, notice: "You dont have any items in cart yet !"
+        end
+    end
+
+
+    private
+    def set_product
+        @product = Product.find(params[:product_id])
+      end
 end
