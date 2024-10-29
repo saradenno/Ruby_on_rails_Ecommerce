@@ -10,13 +10,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private 
   def set_current_cart
     if session[:current_cart_id]
-        @current_cart= Cart.find_by_secret_id(session[:current_cart_id])
-    else 
-        @current_cart=Cart.create
-        session[:current_cart_id]=@current_cart.secret_id
+      @current_cart = Cart.find_by_secret_id(session[:current_cart_id])
+      
+      # Associate the cart with the user if not already associated
+      if current_user && @current_cart && @current_cart.user_id.nil?
+        @current_cart.update(user_id: current_user.id)
+      end
+  
+    elsif current_user && current_user.carts.any?
+      # If the user is logged in and has existing carts, load the latest cart
+      @current_cart = current_user.carts.last
+      session[:current_cart_id] = @current_cart.secret_id
+    end
     end
   end
-end
