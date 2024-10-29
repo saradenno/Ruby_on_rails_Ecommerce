@@ -22,6 +22,8 @@
         <%end%>       
     </div>
 
-       
+        <% if @current_cart&.cart_items&.any? %>
+            <div data-controller="stripe-checkout" data-stripe-checkout-url-value="<%= stripe_session_cart_path(@current_cart.secret_id) %>"></div>
+        <%end%>
 </div>
   
