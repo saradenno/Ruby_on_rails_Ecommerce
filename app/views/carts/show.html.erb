@@ -29,22 +29,8 @@
 
     
     </div>
-    <div id="products" class="w-full flex flex-col items-center md:pt-8">
-        <% if @current_cart&.cart_items&.any? %>
-            <% @current_cart.cart_items.each do |cart_item| %>
-                <% product = cart_item.product %>
-                <%= render "products/product", product: product %>
-                
-                <div class="flex items-center space-x-4 mt-2">
-                    <%= button_to "➖", cart_path(id: cart_item.id, quantity: cart_item.quantity - 1), method: :patch, class: "bg-gray-300 px-2 py-1 rounded-lg" if cart_item.quantity > 1 %>
-                    <span class="text-lg"><%= cart_item.quantity %></span>
-                    <%= button_to "➕", cart_path(id: cart_item.id, quantity: cart_item.quantity + 1), method: :patch, class: "bg-gray-300 px-2 py-1 rounded-lg" %>
-                </div>
-            
-                <%= link_to "Remove from cart", cart_path(product_id: product.id), method: :delete, class: "p-2 bg-red-500 text-white font-semibold hover:bg-red-600 rounded-lg" , data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
-            <% end %>
-        <% end %>
-    </div>
+    
+    
 
 
 </div>
