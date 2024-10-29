@@ -1,0 +1,27 @@
+<div class=" w-full grid md:grid-cols-2">
+    <div class ="w-full flex flex-col items-center md:pt-8">
+        <h1 class="font-miroles text-5xl text-black-100 mb-4 text-center"> Your Cart </h1>
+        <% if @current_cart&.cart_items&.any? %>
+            <% total_items = @current_cart.cart_items.sum(:quantity) %>
+            <p> You have <%= total_items %> <%= "item".pluralize(total_items) %> in your cart </p>
+            <div class="mx-auto w-full flex flec-col gap-2 ">
+            
+                <% @current_cart.cart_items.each.with_index do |cart_item, index| %>
+                    <div class="flex gap-2 bg-gray-100 p-2 rounded-lg">
+                        <span class="p-2 rounded-full bg-gray-500 text-gray-100"> <%= index + 1 %> </span>
+                        <p clas=""> <%= cart_item.product.name %> </p>
+                        <p class="text-green-500"> <%= number_to_currency(cart_item.product.price * cart_item.quantity) %> </p>
+                    </div>                    
+
+                <% end %>
+            </div>
+
+        <%else %>
+        <p> Your cart is empty , Take a look around ! </p>
+        <%= link_to "Shop Now", products_path, class: "bg-gray-500 text-white font-semibold px-4 py-2 rounded-lg" %>
+        <%end%>       
+    </div>
+
+       
+</div>
+  
