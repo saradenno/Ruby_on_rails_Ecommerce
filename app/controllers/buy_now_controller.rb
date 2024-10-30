@@ -29,7 +29,15 @@ class BuyNowController < ApplicationController
     end
   
     def success
+      if @product.stock >= 1
+        Order.create!(product: @product, quantity: 1, total_price: @product.price)
+        @product.update(stock: @product.stock - 1) # Vermindert voorraad met 1 voor directe aankoop
+      else
+        flash[:alert] = "Het product is helaas niet meer op voorraad."
+        redirect_to products_path and return
+      end
     end
+    
   
     private
   
