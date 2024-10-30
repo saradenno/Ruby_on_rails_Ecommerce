@@ -75,12 +75,25 @@ class CartsController < ApplicationController
     end 
 
     def success
-        if @current_cart.cart_items.any?
-            session[:current_cart_id]=nil
+      if @current_cart.cart_items.any?
+        session[:current_cart_id] = nil
+    
+        @current_cart.cart_items.each do |cart_item|
+          if cart_item.product.stock >= cart_item.quantity
+            Order.create!(product: cart_item.product, quantity: cart_item.quantity, total_price: cart_item.product.price * cart_item.quantity, user_id: current_user&.id)
+            cart_item.product.update(stock: cart_item.product.stock - cart_item.quantity)
+          else
+            flash[:alert] = "Niet genoeg voorraad voor #{cart_item.product.name}."
+            redirect_to cart_path(@current_cart) and return
+          end
         end
-        @purchased_cart= Cart.find_by_secret_id(params[:id])
+    
+        @purchased_cart = Cart.find_by_secret_id(params[:id])
         redirect_to root_path if !@purchased_cart
+      end
     end
+    
+    
 
     private
     def set_product
