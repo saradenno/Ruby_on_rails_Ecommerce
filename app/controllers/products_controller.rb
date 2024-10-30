@@ -8,6 +8,7 @@ class ProductsController < ApplicationController
   def index
     if params[:query].present?
       @products = Product.where("name ILIKE ?", "%#{params[:query]}%")
+      flash.now[:notice] = "No results found for “#{params[:query]}”. Check the spelling or use a different word! :)" if @products.empty?
     else
       @products = Product.all
     end
